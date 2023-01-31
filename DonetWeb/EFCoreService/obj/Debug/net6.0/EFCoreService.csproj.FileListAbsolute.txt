@@ -1,0 +1,17 @@
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\bin\Debug\net6.0\EFCoreService.deps.json
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\bin\Debug\net6.0\EFCoreService.dll
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\bin\Debug\net6.0\EFCoreService.pdb
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\bin\Debug\net6.0\EFCoreModel.dll
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\bin\Debug\net6.0\EF_Identity.dll
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\bin\Debug\net6.0\EFCoreModel.pdb
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\bin\Debug\net6.0\EF_Identity.pdb
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\obj\Debug\net6.0\EFCoreService.csproj.AssemblyReference.cache
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\obj\Debug\net6.0\EFCoreService.GeneratedMSBuildEditorConfig.editorconfig
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\obj\Debug\net6.0\EFCoreService.AssemblyInfoInputs.cache
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\obj\Debug\net6.0\EFCoreService.AssemblyInfo.cs
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\obj\Debug\net6.0\EFCoreService.csproj.CoreCompileInputs.cache
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\obj\Debug\net6.0\EFCoreService.csproj.CopyComplete
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\obj\Debug\net6.0\EFCoreService.dll
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\obj\Debug\net6.0\refint\EFCoreService.dll
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\obj\Debug\net6.0\EFCoreService.pdb
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EFCoreService\obj\Debug\net6.0\ref\EFCoreService.dll

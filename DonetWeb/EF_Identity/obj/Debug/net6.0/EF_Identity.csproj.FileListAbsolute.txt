@@ -1,0 +1,14 @@
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\bin\Debug\net6.0\EF_Identity.deps.json
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\bin\Debug\net6.0\EF_Identity.runtimeconfig.json
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\bin\Debug\net6.0\EF_Identity.dll
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\bin\Debug\net6.0\EF_Identity.pdb
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\obj\Debug\net6.0\EF_Identity.csproj.AssemblyReference.cache
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\obj\Debug\net6.0\EF_Identity.GeneratedMSBuildEditorConfig.editorconfig
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\obj\Debug\net6.0\EF_Identity.AssemblyInfoInputs.cache
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\obj\Debug\net6.0\EF_Identity.AssemblyInfo.cs
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\obj\Debug\net6.0\EF_Identity.csproj.CoreCompileInputs.cache
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\obj\Debug\net6.0\EF_Identity.dll
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\obj\Debug\net6.0\refint\EF_Identity.dll
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\obj\Debug\net6.0\EF_Identity.pdb
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\obj\Debug\net6.0\EF_Identity.genruntimeconfig.cache
+F:\AProgramLearn\MyDoNetProject\DonetWeb\EF_Identity\obj\Debug\net6.0\ref\EF_Identity.dll
