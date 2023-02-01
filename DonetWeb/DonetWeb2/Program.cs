@@ -1,13 +1,17 @@
+using DonetWeb2.Authorization;
 using DonetWeb2.JWT;
 using EF_Identity;
 using EFCore;
 using EFCoreService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 using System.Text;
 using Zack.Commons;
 
@@ -83,12 +87,23 @@ namespace DonetWeb2
                 .AddRoleManager<RoleManager<Role>>()
                 .AddUserManager<UserManager<User>>();
 
-            //配置基于声明的授权
-            /*builder.Services.AddAuthorization(options =>
+
+            
+
+            //添加授权处理器
+            builder.Services.TryAddEnumerable(ServiceDescriptor.Transient<IAuthorizationHandler,MusicAuthorizationHandler>());
+
+            //配置基于策略和声明的授权
+            builder.Services.AddAuthorization(options =>                                 
             {
-                options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole("Admin"));
-                options.AddPolicy("EmployeeOnly", policy => policy.RequireClaim("EmployeeNumber"));
-            });*/
+                
+                //声明授权
+                //options.AddPolicy("MusicPower", policy => policy.RequireClaim(ClaimTypes.Actor, ClaimTypes.GivenName));
+                //策略授权
+                options.AddPolicy("Music", policy => policy.Requirements.Add(new MusicRequirement(new List<string> { "MusAdd","MusUpdate",",MusDelete","MusSelect"})));
+                options.AddPolicy("Role", policy => policy.Requirements.Add(new MusicRequirement(new List<string> { "RoleAdd", "RoleUpdate", "RoleDelete", "RoleSelect" })));
+                options.AddPolicy("User", policy => policy.Requirements.Add(new MusicRequirement(new List<string> { "UserAdd", "UserUpdate", "UserDelete", "UserSelect" })));
+            });
             //配置跨域
             string[] urls = new[] { "http://localhost:5173", "http://localhost:8080" };
             builder.Services.AddCors(options =>

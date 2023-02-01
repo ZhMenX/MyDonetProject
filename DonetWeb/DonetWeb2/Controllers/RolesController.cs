@@ -10,7 +10,7 @@ namespace DonetWeb2.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles= "Admin")]
+    [Authorize(Roles= "Role")]
     public class RolesController : ControllerBase
     {
 

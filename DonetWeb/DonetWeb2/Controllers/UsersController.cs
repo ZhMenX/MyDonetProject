@@ -2,14 +2,17 @@
 using EF_Identity;
 using EFCoreModel.Entity;
 using EFCoreService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace DonetWeb2.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
+    [Authorize(Roles = "User")]
     public class UsersController : ControllerBase
     {
         private readonly UserManager<User> _userManager;

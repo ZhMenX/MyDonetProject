@@ -10,7 +10,7 @@ namespace DonetWeb2.Controllers
     [Route("[controller]/[action]")]
     [ApiController]
     //[Authorize]//表示这个控制器类下所有的操作方法都需要登录后才能访问
-    //[Authorize(Policy = "RequireAdministratorRole")]
+    [Authorize(Policy = "Music")]
     public class MusicsController : ControllerBase
     {
         private MusicService musicService;

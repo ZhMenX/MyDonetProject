@@ -1,8 +1,10 @@
 ﻿using EF_Identity;
 using EFCore;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,10 +14,29 @@ namespace EFCoreService
     {
         private readonly IdDbContext context;
 
-        public UsersAndRolesService(IdDbContext context)
+        private readonly RoleManager<Role> roleManager;
+
+        public UsersAndRolesService(IdDbContext context, RoleManager<Role> roleManager)
         {
             this.context = context;
+            this.roleManager = roleManager;
         }
+
+        public async Task<List<string>> GetClaimsValueByRoleAsync()
+        {
+            List<Role> roles =GetRoles();
+            List<string> values = new List<string>();
+            foreach (var role in roles)
+            {
+                IList<System.Security.Claims.Claim> claims = await roleManager.GetClaimsAsync(role);
+                foreach (var claim in claims)
+                {
+                    values.Add(claim.Value);
+                }
+            }
+            return values;
+        }
+
         //获取所有角色
         public List<Role> GetRoles()
         {

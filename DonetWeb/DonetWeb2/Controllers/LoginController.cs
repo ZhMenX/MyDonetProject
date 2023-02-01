@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -53,11 +54,22 @@ namespace DonetWeb2.Controllers
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName)
             };
+            //获取拥有的角色
             var roles = await _userManager.GetRolesAsync(user);
-            foreach (var role in roles)
+           
+            foreach (var rolename in roles)
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
+                claims.Add(new Claim(ClaimTypes.Role, rolename));
+                Role role = await _roleManager.FindByNameAsync(rolename);
+                //获取角色拥有的声明Claims
+                IList<Claim> claimsList = await _roleManager.GetClaimsAsync(role);
+                foreach (var claim in claimsList)
+                {
+                    claims.Add(new Claim(ClaimTypes.Actor, claim.Type));
+                    claims.Add(new Claim(ClaimTypes.GivenName, claim.Value));
+                }
+            }                     
+
             string jwtToken = BuildToken(claims, jwtOptions.Value);
 
             if (success)

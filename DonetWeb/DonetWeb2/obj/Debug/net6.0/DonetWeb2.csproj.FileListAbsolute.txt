@@ -177,3 +177,5 @@ F:\AProgramLearn\MyDoNetProject\DonetWeb\DonetWeb2\obj\Debug\net6.0\refint\Donet
 F:\AProgramLearn\MyDoNetProject\DonetWeb\DonetWeb2\obj\Debug\net6.0\DonetWeb2.pdb
 F:\AProgramLearn\MyDoNetProject\DonetWeb\DonetWeb2\obj\Debug\net6.0\DonetWeb2.genruntimeconfig.cache
 F:\AProgramLearn\MyDoNetProject\DonetWeb\DonetWeb2\obj\Debug\net6.0\ref\DonetWeb2.dll
+F:\AProgramLearn\MyDoNetProject\DonetWeb\DonetWeb2\bin\Debug\net6.0\Microsoft.AspNetCore.Authorization.dll
+F:\AProgramLearn\MyDoNetProject\DonetWeb\DonetWeb2\bin\Debug\net6.0\Microsoft.AspNetCore.Metadata.dll
