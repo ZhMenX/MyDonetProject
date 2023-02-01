@@ -84,11 +84,11 @@ namespace DonetWeb2
                 .AddUserManager<UserManager<User>>();
 
             //ÅäÖÃ»ùÓÚÉùÃ÷µÄÊÚÈ¨
-            builder.Services.AddAuthorization(options =>
+            /*builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole("Admin"));
                 options.AddPolicy("EmployeeOnly", policy => policy.RequireClaim("EmployeeNumber"));
-            });
+            });*/
             //ÅäÖÃ¿çÓò
             string[] urls = new[] { "http://localhost:5173", "http://localhost:8080" };
             builder.Services.AddCors(options =>

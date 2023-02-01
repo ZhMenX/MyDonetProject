@@ -131,7 +131,7 @@ export default {
                 <template #default>
                   <!--这是首页歌曲推荐 :pagination="true"-->
                   <div style="margin-top: 70px">
-                    <swiper :pagination="true" :modules="modules">
+                    <swiper :modules="modules">
                       <swiper-slide
                         ><ul>
                           <li>
