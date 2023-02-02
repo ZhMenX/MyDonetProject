@@ -32,13 +32,11 @@ namespace DonetWeb2.Authorization
             //验证角色是否权限
             foreach(var value in values)
             {
-                if(requirement.Permissions.Contains(value))
+                if (requirement.Permissions.Contains(value) && value != null)
                 {
                     context.Succeed(requirement);
                 }
             }
-
-
             return Task.CompletedTask;
         }
     }

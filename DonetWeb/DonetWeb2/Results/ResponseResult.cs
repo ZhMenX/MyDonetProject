@@ -1,4 +1,5 @@
 ﻿using EF_Identity;
+using EFCoreModel.Entity;
 
 namespace DonetWeb2.Results
 {
@@ -68,6 +69,11 @@ namespace DonetWeb2.Results
         }
 
         internal static object? Ok(User loginUser, string jwtToken, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static ResponseResult Success(Func<Music[]> toArray)
         {
             throw new NotImplementedException();
         }

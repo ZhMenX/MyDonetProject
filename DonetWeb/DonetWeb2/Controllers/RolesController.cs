@@ -10,7 +10,7 @@ namespace DonetWeb2.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles= "Role")]
+    [Authorize(Policy= "Role")]
     public class RolesController : ControllerBase
     {
 
@@ -24,7 +24,8 @@ namespace DonetWeb2.Controllers
             this.usersAndRolesService = usersAndRolesService;
         }
         //创建角色
-        [HttpGet]
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateRole(string roleName)
         {
             var result = await _roleManager.CreateAsync(new Role { Name=roleName });
@@ -36,19 +37,29 @@ namespace DonetWeb2.Controllers
             return Ok(ResponseResult.Success(result.Errors+"创建失败"));
         }
 
+        //获取指定角色
+        [HttpGet]
+        public ResponseResult GetRoleByName(string roleName)
+        {
+            List<Role> roles = usersAndRolesService.GetRolesByName(roleName);
+
+            return ResponseResult.Success(roles);
+        }
+
 
         //删除角色
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DelRole(string roleName)
         {
             Role role = await _roleManager.FindByNameAsync(roleName);
             var result = await _roleManager.DeleteAsync(role);
             if (result.Succeeded)
             {
-                return Ok(ResponseResult.Success("创建成功！"));
+                return Ok(ResponseResult.Success("删除成功！"));
             }
 
-            return Ok(ResponseResult.Success(result.Errors + "创建失败"));
+            return Ok(ResponseResult.Error(result.Errors,500));
         }
 
         //获取所有角色

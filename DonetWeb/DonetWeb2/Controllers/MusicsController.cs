@@ -9,7 +9,6 @@ namespace DonetWeb2.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    //[Authorize]//表示这个控制器类下所有的操作方法都需要登录后才能访问
     [Authorize(Policy = "Music")]
     public class MusicsController : ControllerBase
     {
@@ -37,6 +36,7 @@ namespace DonetWeb2.Controllers
         }
         //增加
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ResponseResult AddMusic(Music music)
         {
             musicService.AddMusic(music);
@@ -58,6 +58,7 @@ namespace DonetWeb2.Controllers
         }
         //删除
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ResponseResult DeleteMusic(long mid)
         {
             musicService.DeleteMusic(mid);

@@ -21,7 +21,8 @@ initAxios.interceptors.request.use(
 		// 在发送请求之前做些什么
 		//var token = store.getToken();
 		var token = localStorage.getItem("token");
-		if(token!=null){
+		config.headers.Authorization = "Bearer "+token
+		if(token ==null){
 			config.headers.Authorization = "Bearer "+token
 		}
 		return config

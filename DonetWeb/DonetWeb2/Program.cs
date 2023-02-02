@@ -85,10 +85,7 @@ namespace DonetWeb2
             idBuilder.AddEntityFrameworkStores<IdDbContext>()
                 .AddDefaultTokenProviders()
                 .AddRoleManager<RoleManager<Role>>()
-                .AddUserManager<UserManager<User>>();
-
-
-            
+                .AddUserManager<UserManager<User>>();        
 
             //添加授权处理器
             builder.Services.TryAddEnumerable(ServiceDescriptor.Transient<IAuthorizationHandler,MusicAuthorizationHandler>());
@@ -143,7 +140,6 @@ namespace DonetWeb2
             app.UseCors();
             app.UseHttpsRedirection();
 
-            //JWT配置添加
             //用户鉴权
             app.UseAuthentication();
 

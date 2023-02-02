@@ -1,12 +1,5 @@
 ﻿using EF_Identity;
-using EFCore;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EFCoreService
 {
@@ -42,6 +35,15 @@ namespace EFCoreService
         {
             return context.Roles.Where(r => r.Id > 0).ToList();
         }
+
+        //获取指定角色
+        public List<Role> GetRolesByName(string name)
+        {
+            List<Role> roles = context.Roles.Where(r=>r.Name.Contains(name).Equals(true)).ToList();
+
+            return roles;
+        }
+
         //获取所有用户
         public List<User> GetUsers()
         {
@@ -50,6 +52,14 @@ namespace EFCoreService
             return users;
         }
 
- 
+        //获取指定用户
+        public List<User> GetUsersByName(string name)
+        {
+
+            List<User> users = context.Users.Where(u=>u.UserName.Contains(name)).ToList();
+            return users;
+        }
+
+
     }
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
 import menuList from "../components/Menu.vue";
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, inject } from "vue";
 import type { TabsPaneContext } from "element-plus";
 import api from "@/axios/axios.js";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -20,6 +20,7 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
 // Import Swiper styles
 import "swiper/css";
+
 export default {
   components: {
     menuList,
@@ -37,6 +38,9 @@ export default {
       list: [],
       musicId: "",
     });
+    //配置页面刷新
+    const reload: any = inject("reload");
+    let timer = reactive({ value: 1 });
     const onSwiper = (swiper: any) => {
       console.log(swiper);
     };
@@ -46,6 +50,7 @@ export default {
     onMounted(() => {
       //检查是否登录
       var token = localStorage.getItem("token");
+
       if (token === null) {
         ElMessageBox.alert("欢迎来的QQ音乐,请登录！", "Hello", {
           confirmButtonText: "OK",
@@ -71,6 +76,10 @@ export default {
         });
       }
     });
+
+    const goodclick = () => {
+      //reload();
+    };
     const rowBack = (row: any, column: any, cell: any, event: any) => {
       console.log(row);
       console.log(column);
@@ -79,19 +88,27 @@ export default {
     };
     //播放
     const onPlayer = (row: any) => {
-      console.log("操作的那条数据" + JSON.stringify(row.pid));
+      console.log("操作的那条数据" + JSON.stringify(row.singer));
       tableData.musicId = row.pid;
+
+      localStorage.setItem("musicId", row.pid);
+      localStorage.setItem("musicName", JSON.stringify(row.name));
+      localStorage.setItem("musicSinger", JSON.stringify(row.singer));
+      //timer.value = new Date().getTime();
+      reload();
     };
     return {
       activeNameNum,
       handleClickNum,
       tableData,
       rowBack,
+      goodclick,
       onPlayer,
       onSwiper,
       onSlideChange,
       modules: [Pagination, Navigation],
       currentDate,
+      timer,
     };
   },
 };
@@ -269,12 +286,19 @@ export default {
                   <div>
                     <!--这是首页歌曲推荐-->
                     <div>
-                      <el-table :data="tableData.list" height="400" style="width: 100%">
+                      <el-table :data="tableData.list" height="500px" style="width: 100%">
                         <el-table-column prop="name" label="歌曲名称" />
                         <el-table-column prop="singer" label="演唱者" />
                         <el-table-column prop="composer" label="作曲者" />
                         <el-table-column prop="album" label="专辑" />
-                        <el-table-column prop="duration" label="时长" />
+                        <el-table-column prop="duration" label="时长" width="80px" />
+                        <el-table-column label="" width="100px">
+                          <template #default="scope">
+                            <el-button text type="primary" @click="onPlayer(scope.row)"
+                              >播放</el-button
+                            >
+                          </template>
+                        </el-table-column>
                       </el-table>
                     </div>
                   </div>
@@ -288,12 +312,19 @@ export default {
                   <div>
                     <!--这是首页歌曲推荐-->
                     <div>
-                      <el-table :data="tableData.list" height="400" style="width: 100%">
+                      <el-table :data="tableData.list" height="500px" style="width: 100%">
                         <el-table-column prop="name" label="歌曲名称" />
                         <el-table-column prop="singer" label="演唱者" />
                         <el-table-column prop="composer" label="作曲者" />
                         <el-table-column prop="album" label="专辑" />
-                        <el-table-column prop="duration" label="时长" />
+                        <el-table-column prop="duration" label="时长" width="80px" />
+                        <el-table-column label="" width="100px">
+                          <template #default="scope">
+                            <el-button text type="primary" @click="onPlayer(scope.row)"
+                              >播放</el-button
+                            >
+                          </template>
+                        </el-table-column>
                       </el-table>
                     </div>
                   </div>
@@ -304,7 +335,7 @@ export default {
         </el-header>
         <el-main>
           <!--音乐播放器-->
-          <player :mid="tableData.musicId"></player>
+          <player @click.native="goodclick" :key="timer.value"></player>
         </el-main>
         <el-footer> </el-footer>
       </el-container>

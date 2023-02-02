@@ -8,7 +8,7 @@ namespace EF_Identity
 {
     public record LoginRequest(string UserName, string Password);
 
-    public record UserRequest(string UserName, string Password,string email);
+    public record UserRequest(string UserName, string currentPassword,string newPassword,string email);
 
     public record UpdateRoleByUserNameRequest(string UserName, string RoleName);
 }

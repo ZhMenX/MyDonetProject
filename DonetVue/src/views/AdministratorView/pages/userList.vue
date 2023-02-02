@@ -3,13 +3,13 @@ import { onMounted, reactive, ref, toRefs, inject } from "vue";
 import api from "@/axios/axios.js";
 import axios from "axios";
 import { ElMessageBox } from "element-plus";
-//获取音乐列表
+//获取用户列表
 let musicData = reactive({
   tablelist: [],
 });
 onMounted(() => {
   api({
-    url: "/Musics/GetMusicList",
+    url: "/Users/SearchAllUsers",
     method: "get",
   }).then((res: any) => {
     musicData.tablelist = res.data;
@@ -19,30 +19,96 @@ onMounted(() => {
 const formInline = reactive({
   name: "",
 });
+//新增
+const formAdd = reactive({
+  userName: "",
+  password: "",
+  email: "",
+});
 //引入界面刷新
 const reload: any = inject("reload");
-//按歌曲名字进行查询
+//按用户名字进行查询
 const onSubmit = () => {
+  if (formInline.name != "") {
+    api.get("Users/SearchByName?name=" + formInline.name).then((res: any) => {
+      musicData.tablelist = res.data;
+    });
+  } else {
+    api({
+      url: "/Users/SearchAllUsers",
+      method: "get",
+    }).then((res: any) => {
+      musicData.tablelist = res.data;
+    });
+  }
+};
+//新增框
+var dialogVisible = ref(false);
+
+//新增
+const onAdd = () => {
   let user = {
-    name: formInline.name,
+    userName: formAdd.userName,
+    newPassword: formAdd.password,
+    currentPassword: "",
+    email: formAdd.email,
   };
-  axios.post("Musics/GetMusicByName", user).then((res: any) => {
-    musicData.tablelist = res.data;
+  console.log(user);
+  api.post("Users/CreateUser", user).then((res: any) => {
+    dialogVisible.value = false;
+    reload();
   });
 };
 //编辑框
-var dialogVisible = ref(false);
-//新增
-const onAdd = () => {
-  dialogVisible.value = true;
-};
+var dialogVisibleEdit = ref(false);
+const formEdit = reactive({
+  userName: "",
+  newPassword: "",
+  currentPassword: "",
+  email: "",
+});
 //编辑
 const onEdit = (row: any) => {
-  console.log("操作的那条数据" + JSON.stringify(row.pid));
+  dialogVisibleEdit.value = true;
+  console.log("操作的那条数据" + JSON.stringify(row));
+  formEdit.userName = row.userName;
+  formEdit.email = row.email;
+  let user = {
+    userName: formEdit.userName,
+    newPassword: "",
+    currentPassword: "",
+    email: formEdit.email,
+  };
+  api.post("Users/UpdateUser", user).then((res: any) => {
+    dialogVisible.value = false;
+    reload();
+  });
+};
+var dialogVisibleEditPassword = ref(false);
+//修改密码
+const onEditPassword = (row: any) => {
+  dialogVisibleEditPassword.value = true;
+  formEdit.userName = row.userName;
+  let user = {
+    userName: formEdit.userName,
+    newPassword: formEdit.newPassword,
+    currentPassword: formEdit.currentPassword,
+    email: "",
+  };
+  api.post("Users/UpdateUser", user).then((res: any) => {
+    dialogVisible.value = false;
+    reload();
+  });
+};
+//删除用户
+const onDelete = (row: any) => {
+  api.get("Users/DelUser?name=" + row.userName).then((res: any) => {
+    reload();
+  });
 };
 
 const handleClose = (done: () => void) => {
-  ElMessageBox.confirm("Are you sure to close this dialog?")
+  ElMessageBox.confirm("确定要关闭嘛")
     .then(() => {
       done();
     })
@@ -58,27 +124,90 @@ const handleClose = (done: () => void) => {
       <el-col :span="24">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="">
-            <el-input v-model="formInline.name" placeholder="请输入歌曲名字" />
+            <el-input v-model="formInline.name" placeholder="请输入角色名字" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" @click="onAdd">新增</el-button>
+            <el-button type="success" @click="dialogVisible = true">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
       <el-dialog
         v-model="dialogVisible"
-        title="Tips"
+        title="新增用户"
         width="30%"
         :before-close="handleClose"
       >
-        <span>This is a message</span>
+        <el-form :inline="true" :model="formAdd" class="demo-form-inline">
+          <el-form-item label="名字：">
+            <el-input v-model="formAdd.userName" placeholder="请输入用户名" />
+          </el-form-item>
+          <el-form-item label="密码：">
+            <el-input v-model="formAdd.password" placeholder="请输入密码" show-password />
+          </el-form-item>
+          <el-form-item label="邮箱：">
+            <el-input v-model="formAdd.email" placeholder="请输入邮箱" />
+          </el-form-item>
+        </el-form>
         <template #footer>
           <span class="dialog-footer">
-            <el-button @click="dialogVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="dialogVisible = false"> Confirm </el-button>
+            <el-button @click="dialogVisible = false">取消</el-button>
+            <el-button type="primary" @click="onAdd"> 添加 </el-button>
+          </span>
+        </template>
+      </el-dialog>
+      <el-dialog
+        v-model="dialogVisibleEditPassword"
+        title="修改密码"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <el-form :inline="true" class="demo-form-inline">
+          <el-form-item label="名字：">
+            <el-input v-model="formEdit.userName" placeholder="请输入用户名" />
+          </el-form-item>
+          <el-form-item label="密码：">
+            <el-input
+              v-model="formEdit.currentPassword"
+              placeholder="请输入当前密码"
+              show-password
+            />
+          </el-form-item>
+          <el-form-item label="密码：">
+            <el-input
+              v-model="formEdit.newPassword"
+              placeholder="请输入新的密码"
+              show-password
+            />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisibleEditPassword = false">取消</el-button>
+            <el-button type="primary" @click="onEditPassword"> 修改 </el-button>
+          </span>
+        </template>
+      </el-dialog>
+      <el-dialog
+        v-model="dialogVisibleEdit"
+        title="修改用户"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <el-form :inline="true" class="demo-form-inline">
+          <el-form-item label="名字：">
+            <el-input v-model="formEdit.userName" placeholder="请输入用户名" />
+          </el-form-item>
+          <el-form-item label="邮箱：">
+            <el-input v-model="formEdit.email" placeholder="请输入邮箱" />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisibleEdit = false">取消</el-button>
+            <el-button type="primary" @click="onEdit"> 修改 </el-button>
           </span>
         </template>
       </el-dialog>
@@ -92,14 +221,16 @@ const handleClose = (done: () => void) => {
         style="width: 100%"
         highlight-current-row
       >
-        <el-table-column prop="mid" label="mid" width="50" />
-        <el-table-column prop="name" label="歌曲名称" />
-        <el-table-column prop="singer" label="演唱者" />
-        <el-table-column prop="album" label="专辑" />
+        <el-table-column prop="id" label="id" width="50" />
+        <el-table-column prop="userName" label="Name" />
+        <el-table-column prop="email" label="email" />
         <el-table-column label="操作">
           <template #default="scope">
             <el-button type="primary" @click="onEdit(scope.row)">编辑</el-button>
-            <el-button type="danger">删除</el-button>
+            <el-button type="primary" @click="onEditPassword(scope.row)"
+              >修改密码</el-button
+            >
+            <el-button type="danger" @click="onDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

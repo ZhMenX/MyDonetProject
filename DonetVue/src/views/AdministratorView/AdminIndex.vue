@@ -44,7 +44,7 @@ const goBack = () => {
                 <el-menu-item :index="'/user'">用户管理</el-menu-item>
               </el-menu-item-group>
               <el-menu-item-group title="权限">
-                <el-menu-item :index="'/role'">权限管理</el-menu-item>
+                <el-menu-item :index="'/role'">角色管理</el-menu-item>
               </el-menu-item-group>
             </el-sub-menu>
           </el-menu>

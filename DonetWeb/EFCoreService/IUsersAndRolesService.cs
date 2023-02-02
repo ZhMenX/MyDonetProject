@@ -17,6 +17,12 @@ namespace EFCoreService
 
         //获取所有角色所拥有的声明
         Task<List<string>> GetClaimsValueByRoleAsync();
+
+        List<User> GetUsersByName(string name);
+
+        List<Role> GetRolesByName(string name);
+
+
     }
 
 }

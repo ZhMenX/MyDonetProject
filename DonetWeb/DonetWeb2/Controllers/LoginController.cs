@@ -1,6 +1,7 @@
 ﻿using DonetWeb2.JWT;
 using DonetWeb2.Results;
 using EF_Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -96,7 +97,7 @@ namespace DonetWeb2.Controllers
         }
         //注销登录
         [HttpGet]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
             return Ok();
         }
