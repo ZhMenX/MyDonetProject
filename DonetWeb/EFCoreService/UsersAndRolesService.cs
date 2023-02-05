@@ -1,5 +1,6 @@
 ﻿using EF_Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreService
 {
@@ -40,7 +41,6 @@ namespace EFCoreService
         public List<Role> GetRolesByName(string name)
         {
             List<Role> roles = context.Roles.Where(r=>r.Name.Contains(name).Equals(true)).ToList();
-
             return roles;
         }
 
@@ -60,6 +60,11 @@ namespace EFCoreService
             return users;
         }
 
-
+        //通过用户名来修改用户的角色
+        public void UpdateRoleByUserName(string name)
+        {
+            
+            throw new NotImplementedException();
+        }
     }
 }

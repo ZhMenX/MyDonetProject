@@ -45,7 +45,10 @@ var dialogVisible = ref(false);
 
 //新增
 const onAdd = () => {
-  api.post("Roles/CreateRole", formAdd.roleName).then((res: any) => {
+  let user = {
+    roleName: formAdd.roleName,
+  };
+  api.post("Roles/CreateRole", user).then((res: any) => {
     dialogVisible.value = false;
     reload();
   });

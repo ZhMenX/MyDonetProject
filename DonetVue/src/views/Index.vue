@@ -90,10 +90,10 @@ export default {
     const onPlayer = (row: any) => {
       console.log("操作的那条数据" + JSON.stringify(row.singer));
       tableData.musicId = row.pid;
-
       localStorage.setItem("musicId", row.pid);
       localStorage.setItem("musicName", JSON.stringify(row.name));
       localStorage.setItem("musicSinger", JSON.stringify(row.singer));
+      localStorage.setItem("musicheadPortrait", JSON.stringify(row.headPortrait));
       //timer.value = new Date().getTime();
       reload();
     };
@@ -333,11 +333,13 @@ export default {
             </el-tabs>
           </div>
         </el-header>
-        <el-main>
-          <!--音乐播放器-->
-          <player @click.native="goodclick" :key="timer.value"></player>
-        </el-main>
-        <el-footer> </el-footer>
+        <el-main> </el-main>
+        <el-footer>
+          <div>
+            <!--音乐播放器-->
+            <player @click.native="goodclick" :key="timer.value"></player>
+          </div>
+        </el-footer>
       </el-container>
     </el-container>
   </div>

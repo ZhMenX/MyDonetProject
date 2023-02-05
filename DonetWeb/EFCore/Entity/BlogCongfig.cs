@@ -13,6 +13,7 @@ namespace EFCoreModel.Entity
         public void Configure(EntityTypeBuilder<Blog> builder)
         {
             builder.ToTable("Z_blogs");
+           
         }
     }
 }

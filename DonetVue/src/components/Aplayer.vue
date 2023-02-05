@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- 准备一个容器用来存放音乐播放器 -->
-    <div id="aplayer"></div>
+    <div id="aplayer" style="width: 500px"></div>
   </div>
 </template>
 
@@ -22,24 +22,31 @@ export default {
       audio: [
         // 歌曲列表
         {
-          name: localStorage.getItem("musicName"), // 歌曲名字
-          artist: localStorage.getItem("musicSinger"), // 歌曲演唱者
+          name: localStorage
+            .getItem("musicName")
+            .substring(1, localStorage.getItem("musicName").length - 1), // 歌曲名字
+          artist: localStorage
+            .getItem("musicSinger")
+            .substring(1, localStorage.getItem("musicSinger").length - 1), // 歌曲演唱者
           // 歌曲地址（这里用外链地址）
           url:
             "https://music.163.com/song/media/outer/url?id=" +
             localStorage.getItem("musicId"),
           cover:
-            "http://p2.music.126.net/ZqJp0p4eDzCUCboH-WZJYA==/109951163326946996.jpg?param=130y130", // 歌曲头像
+            "https://" +
+            localStorage
+              .getItem("musicheadPortrait")
+              .substring(1, localStorage.getItem("musicheadPortrait").length - 1), // 歌曲头像
 
-          lrc: "", // 歌词
+          lrc: "../assets/lrc/恋爱告急_(Live)-鞠婧祎-鞠婧御.lrc", // 歌词
           theme: "rgb(127, 218, 180)", // 播放这首歌曲时的主题色
         },
       ],
       info: {
         fixed: true, // 不开启吸底模式
-        listFolded: true, // 折叠歌曲列表
-        autoplay: true, // 开启自动播放
-        preload: "auto", // 自动预加载歌曲
+        listFolded: false, // 折叠歌曲列表
+        autoplay: false, // 开启自动播放
+        preload: "metadata", // 自动预加载歌曲
         loop: "all", // 播放循环模式、all全部循环 one单曲循环 none只播放一次
         order: "list", //  播放模式，list列表播放, random随机播放
       },
@@ -53,6 +60,7 @@ export default {
     console.log("这是名字" + this.audio[0].name);
     console.log("这是歌手" + this.audio[0].artist);
     console.log("这是结果" + localStorage.getItem("musicName"));
+    console.log("这是头像" + this.audio[0].cover);
   },
   methods: {
     initAudio() {

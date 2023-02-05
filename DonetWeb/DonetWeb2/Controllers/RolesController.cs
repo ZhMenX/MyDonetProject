@@ -26,15 +26,16 @@ namespace DonetWeb2.Controllers
         //创建角色
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CreateRole(string roleName)
+        public async Task<IActionResult> CreateRole(RoleRequest roleRequest)
         {
-            var result = await _roleManager.CreateAsync(new Role { Name=roleName });
+            var result = await _roleManager.CreateAsync(new Role { Name= roleRequest.roleName });
             if(result.Succeeded)
             {
-                return Ok(ResponseResult.Success("创建成功！"));
+                Role role = await _roleManager.FindByNameAsync(roleRequest.roleName);
+                return Ok(ResponseResult.Success(role));
             }
 
-            return Ok(ResponseResult.Success(result.Errors+"创建失败"));
+            return Ok(ResponseResult.Error(result.Errors+"创建失败",500));
         }
 
         //获取指定角色

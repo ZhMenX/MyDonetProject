@@ -29,5 +29,8 @@ namespace EFCoreModel.Entity
         //外链ID
         public int Pid { get; set; }
 
+        //外链接头像
+        public string headPortrait { get; set; }
+
     }
 }

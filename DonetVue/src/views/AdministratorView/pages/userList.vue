@@ -67,12 +67,16 @@ const formEdit = reactive({
   currentPassword: "",
   email: "",
 });
-//编辑
-const onEdit = (row: any) => {
+//打开编辑框
+const openEdit = (row: any) => {
+  dialogVisibleEdit.value = true;
   dialogVisibleEdit.value = true;
   console.log("操作的那条数据" + JSON.stringify(row));
   formEdit.userName = row.userName;
   formEdit.email = row.email;
+};
+//发送更新请求
+const onEdit = (row: any) => {
   let user = {
     userName: formEdit.userName,
     newPassword: "",
@@ -80,7 +84,6 @@ const onEdit = (row: any) => {
     email: formEdit.email,
   };
   api.post("Users/UpdateUser", user).then((res: any) => {
-    dialogVisible.value = false;
     reload();
   });
 };
@@ -226,8 +229,8 @@ const handleClose = (done: () => void) => {
         <el-table-column prop="email" label="email" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button type="primary" @click="onEdit(scope.row)">编辑</el-button>
-            <el-button type="primary" @click="onEditPassword(scope.row)"
+            <el-button type="primary" @click="openEdit(scope.row)">编辑</el-button>
+            <el-button type="primary" @click="dialogVisibleEditPassword = true"
               >修改密码</el-button
             >
             <el-button type="danger" @click="onDelete(scope.row)">删除</el-button>

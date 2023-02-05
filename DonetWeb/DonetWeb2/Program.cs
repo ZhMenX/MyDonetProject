@@ -54,9 +54,7 @@ namespace DonetWeb2
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("conn"));
             });
 
-            //Services  依赖注入
-            builder.Services.AddTransient<MusicService>();         
-
+           
             //Identity标识框架的配置
             IServiceCollection services = builder.Services;
 
@@ -65,7 +63,7 @@ namespace DonetWeb2
             {
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("conn"));
             });
-            builder.Services.AddTransient<UsersAndRolesService>();
+            
             services.AddDataProtection();
             //调用AddIdentityCore添加标识框架的一些重要的基础服务
             services.AddIdentityCore<User>(options =>
@@ -85,8 +83,10 @@ namespace DonetWeb2
             idBuilder.AddEntityFrameworkStores<IdDbContext>()
                 .AddDefaultTokenProviders()
                 .AddRoleManager<RoleManager<Role>>()
-                .AddUserManager<UserManager<User>>();        
-
+                .AddUserManager<UserManager<User>>();
+            //Services  依赖注入
+            builder.Services.AddTransient<MusicService>();
+            builder.Services.AddTransient<UsersAndRolesService>();
             //添加授权处理器
             builder.Services.TryAddEnumerable(ServiceDescriptor.Transient<IAuthorizationHandler,MusicAuthorizationHandler>());
 

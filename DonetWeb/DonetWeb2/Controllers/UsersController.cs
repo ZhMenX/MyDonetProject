@@ -98,11 +98,13 @@ namespace DonetWeb2.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<ResponseResult> UpdateUser(UserRequest request)
-        {
-            User user = new User { Email = request.email, UserName = request.UserName };
-            IdentityResult identityResult = await _userManager.UpdateAsync(user);
-
-            return ResponseResult.Success(identityResult);
+        {        
+            User user = await _userManager.FindByNameAsync(request.UserName);
+            user.Email = request.email;
+            
+            await _userManager.UpdateAsync(user); 
+   
+            return ResponseResult.Success(await _userManager.FindByNameAsync(request.UserName));
         }
 
         //修改用户密码

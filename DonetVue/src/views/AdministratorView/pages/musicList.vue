@@ -31,10 +31,35 @@ const onSubmit = () => {
   });
 };
 //编辑框
-var dialogVisible = ref(false);
-//新增
+var dialogVisibleAdd = ref(false);
+//新增处理
+const formAdd = reactive({
+  Name: "",
+  Singer: "",
+  Composer: "",
+  Album: "",
+  Duration: "",
+  Pid: "",
+  headPortrait: "",
+});
+const openAdd = () => {
+  dialogVisibleAdd.value = true;
+};
 const onAdd = () => {
-  dialogVisible.value = true;
+  let music = {
+    Name: formAdd.Name,
+    Singer: formAdd.Singer,
+    Composer: formAdd.Composer,
+    Album: formAdd.Album,
+    Duration: formAdd.Duration,
+    Pid: formAdd.Pid,
+    headPortrait: formAdd.headPortrait,
+  };
+  api.post("Musics/AddMusic", JSON.stringify(music)).then((res: any) => {
+    musicData.tablelist = res.data;
+    dialogVisibleAdd.value = false;
+    reload();
+  });
 };
 //编辑
 const onEdit = (row: any) => {
@@ -64,21 +89,43 @@ const handleClose = (done: () => void) => {
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" @click="onAdd">新增</el-button>
+            <el-button type="success" @click="openAdd">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
       <el-dialog
-        v-model="dialogVisible"
-        title="Tips"
-        width="30%"
+        v-model="dialogVisibleAdd"
+        title="新增歌曲"
+        width="55%"
         :before-close="handleClose"
       >
-        <span>This is a message</span>
+        <el-form :inline="true" class="demo-form-inline">
+          <el-form-item label="歌曲名字：">
+            <el-input v-model="formAdd.Name" placeholder="请输入歌曲名字" />
+          </el-form-item>
+          <el-form-item label="歌手名字：">
+            <el-input v-model="formAdd.Singer" placeholder="请输入歌手名字" />
+          </el-form-item>
+          <el-form-item label="作曲名字：">
+            <el-input v-model="formAdd.Composer" placeholder="请输入作曲名字" />
+          </el-form-item>
+          <el-form-item label="歌曲专辑：">
+            <el-input v-model="formAdd.Album" placeholder="请输入歌曲专辑" />
+          </el-form-item>
+          <el-form-item label="歌曲时长：">
+            <el-input v-model="formAdd.Duration" placeholder="请输入歌曲时长" />
+          </el-form-item>
+          <el-form-item label="外链接源：">
+            <el-input v-model="formAdd.Pid" placeholder="请输入外链接地址" />
+          </el-form-item>
+          <el-form-item label="链接头像：">
+            <el-input v-model="formAdd.headPortrait" placeholder="请输入链接头像" />
+          </el-form-item>
+        </el-form>
         <template #footer>
           <span class="dialog-footer">
-            <el-button @click="dialogVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="dialogVisible = false"> Confirm </el-button>
+            <el-button @click="dialogVisibleAdd = false">取消</el-button>
+            <el-button type="primary" @click="onAdd"> 新增 </el-button>
           </span>
         </template>
       </el-dialog>
